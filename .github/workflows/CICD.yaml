@@ -54,3 +54,4 @@ jobs:
           push: true
           tags: bagato220/patient-application:${{ github.run_number }}
 
+
