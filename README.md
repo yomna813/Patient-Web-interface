@@ -1,141 +1,144 @@
-Pharmacy Management System
-A simple Flask-based web application to manage pharmacy records, including tracking medicines, sales, and inventory. The system allows pharmacists to add medicines, process sales, and monitor stock levels. Data is stored in a SQLite database.
 
-Features
-Medicine Management
+# Patient Management Interface – DevOps Project
 
-Add new medicines to the inventory with details such as name, price, and quantity.
+This repository presents a full-stack deployment of a **Patient Management Interface** built using Python Flask. The project incorporates modern DevOps tools and workflows including Docker, GitHub Actions, Terraform, and Kubernetes to automate build, deployment, and infrastructure provisioning.
 
-Track the stock of each medicine and monitor when stock is running low.
+---
 
-Update medicine information (e.g., price or quantity) as needed.
+## 📦 Key Components
 
-Sales Management
+- **Flask App** – A lightweight web application that simulates basic patient management.
+- **Dockerfile** – Containerizes the app for deployment in any environment.
+- **GitHub Actions** – Automates the CI/CD pipeline for testing and deployment.
+- **Terraform** – Provisions cloud infrastructure on AWS (EC2, VPC, etc.).
+- **Kubernetes** – Manages application deployment via Minikube or AWS EKS.
 
-Record sales transactions and update the stock accordingly.
+---
 
-Keep track of total sales and generate sales reports.
+## ⚙️ Prerequisites
 
-Inventory Management
+Ensure the following are installed and configured on your system before proceeding:
 
-Monitor the current stock of all medicines.
+1. Git
+2. Docker Engine / Docker Desktop
+3. Terraform
+4. AWS CLI (linked to your AWS account)
+5. Minikube
+6. kubectl
+7. Docker Hub account (with credentials)
 
-Receive alerts when stock is low.
+---
 
-View a detailed history of stock changes.
+## 🚀 Getting Started
 
-Supplier Management
-
-Track suppliers from whom medicines are purchased.
-
-Record the purchase dates and quantities from each supplier.
-
-Search and Filtering
-
-Search medicines by name, type, or price.
-
-Filter and view sales by date range (daily, weekly, or monthly).
-
-Technologies Used
-Python
-
-Flask
-
-Flask-SQLAlchemy (for database integration)
-
-SQLite
-
-HTML
-
-CSS
-
-JavaScript
-
-Getting Started
-Prerequisites
-Python 3.8 or higher
-
-pip (Python package manager)
-
-Installation
-Clone the repository:
+### 1. Clone the Repository
 
 bash
-Copy
-Edit
-git clone https://github.com/yomna813/pharmacy-management-system.git
-cd pharmacy-management-system
-Install required dependencies:
+git clone https://github.com/yomna813/patient-devops-interface.git
+cd patient-devops-interface
+---
+
+### 2. Dockerize the Flask Application
+
+The Dockerfile defines how to build the image:
 
 bash
-Copy
-Edit
-pip install -r requirements.txt
-Run the application:
+docker build -t yomna813/patient-app .
+docker run -p 5000:5000 yomna813/patient-app
+
+Test the app by navigating to `http://localhost:5000`.
+
+---
+
+### 3. Infrastructure as Code with Terraform
+
+Navigate to the terraform directory:
 
 bash
-Copy
-Edit
-python app.py
-Access the application in your browser at:
+cd terraform
+cp terraform.tfvars.example terraform.tfvars
 
-plaintext
-Copy
-Edit
-http://127.0.0.1:5000
-Project Structure
-plaintext
-Copy
-Edit
-pharmacy-management-system/
-│
-├── app.py               # Main application file (Flask)
-├── models.py            # Database models for Medicines, Sales, and Suppliers
-├── templates/           # HTML templates for rendering pages
-│   ├── index.html       # Home page displaying inventory and sales
-│   ├── add_medicine.html # Page to add new medicines to the inventory
-│   ├── sales.html       # Page to process sales and view sales history
-│   ├── inventory.html   # Page to view and manage inventory
-│   └── suppliers.html   # Page to manage supplier information
-├── static/              # Static files (CSS, JavaScript, Images)
-├── pharmacy.db          # SQLite database for storing medicines, sales, and suppliers
-└── requirements.txt     # List of required Python packages
-How It Works
-Home Page
-Navigate to the homepage where you can view the current inventory, total sales, and quick actions to add medicines, record sales, or manage suppliers.
+Edit the `terraform.tfvars` file with your AWS key pair name and AMI ID.
 
-Add Medicine
-Use the "Add Medicine" form to input details about new medicines, including name, price, and quantity. This will update the database and the inventory.
+Then, provision infrastructure:
 
-Sales Management
-On the "Sales" page, you can record each sale by selecting the medicine sold and the quantity. The stock is automatically updated.
+bash
+terraform init
+terraform plan
+terraform apply
 
-Inventory Management
-On the "Inventory" page, you can view all medicines in stock, update quantities, and monitor when stock levels are running low.
+This will create an EC2 instance and required networking.
 
-Supplier Management
-Manage suppliers by adding details such as supplier name, contact information, and purchase history.
+---
 
-Search and Filter
-You can search for medicines based on name, type, or price, and filter sales by different time ranges (daily, weekly, or monthly).
+### 4. Setting Up Kubernetes on EC2
 
-Future Improvements
-Add user authentication for secure login (admin panel for pharmacy managers).
+SSH into your EC2 instance:
 
-Implement advanced inventory tracking with low-stock alerts.
+bash
+ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>
 
-Generate sales reports and export them as CSV or PDF.
+Then install the following:
 
-Integrate barcode scanning for sales processing.
+bash
+# Docker
+sudo apt update
+sudo apt install -y docker.io
+sudo usermod -aG docker ubuntu
+newgrp docker
 
-License
-This project is licensed under the MIT License.
+# kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-Project Flow Overview:
-Homepage: Displays an overview of the current stock, recent sales, and quick links to add new medicines, record sales, or manage suppliers.
+# Minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
-Add Medicines: Forms to add new medicines, update stock, and track expiration dates.
+# Start Minikube
+minikube start --driver=docker
 
-Sales and Inventory Tracking: Track sales in real-time and update inventory accordingly.
+---
 
-Supplier Details: Keep track of where each medicine is sourced from, including cost and delivery dates.
+### 5. Deploy to Kubernetes
+
+Copy files from your local machine to EC2:
+
+bash
+scp -i your-key.pem -r kubernetes/ ubuntu@<EC2_PUBLIC_IP>:~/
+scp -i your-key.pem scripts/deploy-to-minikube.sh ubuntu@<EC2_PUBLIC_IP>:~/
+
+Then on the EC2 instance:
+
+bash
+chmod +x deploy-to-minikube.sh
+./deploy-to-minikube.sh
+
+This script applies the deployment and service manifests.
+
+---
+
+### 6. Accessing the Application
+
+Forward the port:
+
+bash
+kubectl port-forward service/patient-web-interface-service 8080:80
+
+Now access the application from your browser at:
+
+http://<EC2_PUBLIC_IP>:8080
+`
+
+---
+
+## 🔁 GitHub Actions – CI/CD Workflow
+
+Located at: `.github/workflows/ci-cd.yml`
+
+This pipeline automates:
+
+* Cloning the repository
+* Logging in to Docker Hub
+* Building the Docker image
+* Pushing to Docker Hub (e.g., `yomna813/patient-app:latest`)
