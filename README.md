@@ -1,116 +1,141 @@
+Pharmacy Management System
+A simple Flask-based web application to manage pharmacy records, including tracking medicines, sales, and inventory. The system allows pharmacists to add medicines, process sales, and monitor stock levels. Data is stored in a SQLite database.
 
-# Patient Management System  
+Features
+Medicine Management
 
-A simple **Flask-based web application** to manage patient records. The system allows users to **sign up** with their details and **search for patient records** using a National ID. Data is stored in a **SQLite database**.
+Add new medicines to the inventory with details such as name, price, and quantity.
 
----
+Track the stock of each medicine and monitor when stock is running low.
 
-## Features  
+Update medicine information (e.g., price or quantity) as needed.
 
-1. **Patient Signup**  
-   - Users can register their details including name, email, National ID, and birthdate.  
-   - Password validation ensures security, and data is checked for duplicates before being stored.  
+Sales Management
 
-2. **Patient Search**  
-   - Search for patient records using their National ID.  
-   - Displays user information including username, email, and National ID.  
+Record sales transactions and update the stock accordingly.
 
-3. **SQLite Database Integration**  
-   - Patient data is stored in a lightweight SQLite database.  
+Keep track of total sales and generate sales reports.
 
-4. **Form Validation**  
-   - Form inputs are validated using `WTForms`, ensuring data integrity.  
+Inventory Management
 
----
+Monitor the current stock of all medicines.
 
-## Technologies Used  
+Receive alerts when stock is low.
 
-- **Python**  
-- **Flask**  
-- **Flask-WTF**  
-- **SQLite**  
-- **HTML**  
+View a detailed history of stock changes.
 
----
+Supplier Management
 
-## Getting Started  
+Track suppliers from whom medicines are purchased.
 
-### Prerequisites  
+Record the purchase dates and quantities from each supplier.
 
-- Python 3.8 or higher  
-- `pip` (Python package manager)  
+Search and Filtering
 
-### Installation  
+Search medicines by name, type, or price.
 
-1. Clone the repository:  
-   ```bash
-   git clone https://github.com/yourusername/patient-management-system.git
-   cd patient-management-system
-   ```  
+Filter and view sales by date range (daily, weekly, or monthly).
 
-2. Install required dependencies:  
-   ```bash
-   pip install -r requirements.txt
-   ```  
+Technologies Used
+Python
 
-3. Run the application:  
-   ```bash
-   python app.py
-   ```  
+Flask
 
-4. Access the application in your browser at:  
-   ```plaintext
-   http://127.0.0.1:8000
-   ```  
+Flask-SQLAlchemy (for database integration)
 
----
+SQLite
 
-## Project Structure  
+HTML
 
-```plaintext
-patient-management-system/
+CSS
+
+JavaScript
+
+Getting Started
+Prerequisites
+Python 3.8 or higher
+
+pip (Python package manager)
+
+Installation
+Clone the repository:
+
+bash
+Copy
+Edit
+git clone https://github.com/yourusername/pharmacy-management-system.git
+cd pharmacy-management-system
+Install required dependencies:
+
+bash
+Copy
+Edit
+pip install -r requirements.txt
+Run the application:
+
+bash
+Copy
+Edit
+python app.py
+Access the application in your browser at:
+
+plaintext
+Copy
+Edit
+http://127.0.0.1:5000
+Project Structure
+plaintext
+Copy
+Edit
+pharmacy-management-system/
 │
-├── app.py               # Main application file
-├── signup.py            # FlaskForm classes for Signup and Search
-├── templates/           # HTML templates for rendering
-│   ├── main.html        # Main page
-│   ├── signup.html      # Signup page
-│   ├── search.html      # Search page
-│   ├── out.html         # Output/results page
-├── static/              # Static files (CSS, JS, images)
-├── patient.db           # SQLite database file
-├── requirements.txt     # Project dependencies
-└── README.md            # Project documentation
-```
+├── app.py               # Main application file (Flask)
+├── models.py            # Database models for Medicines, Sales, and Suppliers
+├── templates/           # HTML templates for rendering pages
+│   ├── index.html       # Home page displaying inventory and sales
+│   ├── add_medicine.html # Page to add new medicines to the inventory
+│   ├── sales.html       # Page to process sales and view sales history
+│   ├── inventory.html   # Page to view and manage inventory
+│   └── suppliers.html   # Page to manage supplier information
+├── static/              # Static files (CSS, JavaScript, Images)
+├── pharmacy.db          # SQLite database for storing medicines, sales, and suppliers
+└── requirements.txt     # List of required Python packages
+How It Works
+Home Page
+Navigate to the homepage where you can view the current inventory, total sales, and quick actions to add medicines, record sales, or manage suppliers.
 
----
+Add Medicine
+Use the "Add Medicine" form to input details about new medicines, including name, price, and quantity. This will update the database and the inventory.
 
-## How It Works  
+Sales Management
+On the "Sales" page, you can record each sale by selecting the medicine sold and the quantity. The stock is automatically updated.
 
-1. **Main Page**  
-   Navigate to the homepage.  
+Inventory Management
+On the "Inventory" page, you can view all medicines in stock, update quantities, and monitor when stock levels are running low.
 
-2. **Signup**  
-   Fill out the signup form with required details. On successful submission, the data is added to the database.  
+Supplier Management
+Manage suppliers by adding details such as supplier name, contact information, and purchase history.
 
-3. **Search**  
-   Enter a valid National ID to search for a patient. If found, the user details are displayed.  
+Search and Filter
+You can search for medicines based on name, type, or price, and filter sales by different time ranges (daily, weekly, or monthly).
 
-4. **Validation**  
-   - All fields are required.  
-   - Password and confirm password must match.  
-   - Duplicate National IDs are rejected.  
+Future Improvements
+Add user authentication for secure login (admin panel for pharmacy managers).
 
----
+Implement advanced inventory tracking with low-stock alerts.
 
-## Future Improvements  
+Generate sales reports and export them as CSV or PDF.
 
-- Add user authentication for secure login/logout.  
-- Implement advanced search options.  
-- Integrate a RESTful API for external access.  
+Integrate barcode scanning for sales processing.
 
----
+License
+This project is licensed under the MIT License.
 
-## License  
+Project Flow Overview:
+Homepage: Displays an overview of the current stock, recent sales, and quick links to add new medicines, record sales, or manage suppliers.
 
-This project is licensed under the MIT License.  
+Add Medicines: Forms to add new medicines, update stock, and track expiration dates.
+
+Sales and Inventory Tracking: Track sales in real-time and update inventory accordingly.
+
+Supplier Details: Keep track of where each medicine is sourced from, including cost and delivery dates.
