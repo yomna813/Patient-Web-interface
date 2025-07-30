@@ -63,7 +63,7 @@ Clone the repository:
 bash
 Copy
 Edit
-git clone https://github.com/yourusername/pharmacy-management-system.git
+git clone https://github.com/yomna813/pharmacy-management-system.git
 cd pharmacy-management-system
 Install required dependencies:
 
